@@ -1,0 +1,64 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./src",
+    "paths": {
+      "environments/*": [
+        "./environments/*"
+      ],
+      "app/*": [
+        "./app/*"
+      ],
+      "lib/*": [
+        "./lib/*"
+      ],
+      "pages/*": [
+        "./pages/*"
+      ],
+      "components/*": [
+        "./components/*"
+      ],
+      "validators/*": [
+        "./validators/*"
+      ],
+      "providers/*": [
+        "./providers/*"
+      ],
+      "models/*": [
+        "./models/*"
+      ],
+      "decorators/*": [
+        "./decorators/*"
+      ],
+      "pipes/*": [
+        "./pipes/*"
+      ]},
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "dom",
+      "es2015"
+    ],
+    "module": "es2015",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ]
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/**/*.spec.ts",
+    "src/**/__tests__/*.ts"
+  ],
+  "compileOnSave": false,
+  "atom": {
+    "rewriteTsconfig": false
+  }
+}

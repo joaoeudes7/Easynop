@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Detalhes</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-header><ion-icon name="thunderstorm"></ion-icon> Detalhes {{ entities?.data | date}}</ion-card-header>
+    <ion-item-group>
+      <ion-item-divider color="light">A</ion-item-divider>
+      <ion-item><a>Temperatura Máxima: {{entities?.tempMax}} </a></ion-item>
+      <ion-item><a>Temperatura Mínima: {{entities?.tempMin}} </a></ion-item>
+      <ion-item><a>Altura das Nuvens: {{entities?.alturaNuvens}}</a></ion-item>
+      <ion-item><a>Status das Chuvas: {{entities?.chuvaStatus}}</a></ion-item>
+      <ion-item><a>Direcao das Nuvens: {{entities?.direcaoNuvens}}</a></ion-item>
+      <ion-item><a>Direção do tempo: {{entities?.direcaoVento}}</a></ion-item>
+      <ion-item><a>Neboluzidade: {{entities?.neboluzidade}}</a></ion-item>
+      <ion-item><a>Numéro da estação: {{entities?.numEstacao}}</a></ion-item>
+      <ion-item><a>Periodo: {{entities?.periodo}}</a></ion-item>
+      <ion-item><a>Ponto de Orvalho: {{entities?.pontoOrvalho}}</a></ion-item>
+      <ion-item><a>Tipos de Nuvens: [ {{entities?.pressao.n1}} | {{entities?.pressao.n2}} | {{entities?.pressao.n3}} | {{entities?.pressao.n4}} ]</a></ion-item>
+      <ion-item><a>Pressao Atmosferica: {{entities?.pressaoAtmosferica}}</a></ion-item>
+      <ion-item><a>Quantidade de chuva: {{entities?.qtdChuva}}</a></ion-item>
+      <ion-item><a>Quantidade de nuvens: {{entities?.qtdNuvens}}</a></ion-item>
+      <ion-item><a>Temperatura ambiente: {{entities?.tempAmbiente}}</a></ion-item>
+      <ion-item><a>Tempo Passado: {{entities?.tempPassado}}</a></ion-item>
+      <ion-item><a>Tempo presente chuva: {{entities?.tempPresente}}</a></ion-item>
+      <ion-item><a>Tipos de Nuvens: [ {{entities?.tiposNuvens.ch}} | {{entities?.tiposNuvens.cl}} | {{entities?.tiposNuvens.cn}} | {{entities?.tiposNuvens.nh}} ]</a></ion-item>
+      <ion-item><a>Visibilidade: {{entities?.visibilidade}}</a></ion-item>
+    </ion-item-group>
+  </ion-card>
+</ion-content>
