@@ -1,9 +1,9 @@
+import { Data, Synop } from './../synop.model';
 import { ListPage } from '../list/list';
 import { Component } from '@angular/core';
 
-import { Pressao, Synop, Tipos } from './home.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 
 
@@ -13,95 +13,127 @@ import { AngularFireDatabase } from 'angularfire2/database';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  public entity: Synop;
+  public data: Data; // key, Synops[]
+  public synop: Synop;
   public _form: FormGroup;
 
   private PATH = '/synops/';
 
   constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              public toastCtrl: ToastController,
-              public formBuilder: FormBuilder,
-              private db: AngularFireDatabase) {
+    public navParams: NavParams,
+    public toastCtrl: ToastController,
+    public formBuilder: FormBuilder,
+    private db: AngularFireDatabase) {
 
-    this.entity = new Synop();
+    this.synop = new Synop();
+    this.data = new Data();
 
-    this.entity = navParams.data;
-    console.log(this.entity);
-
-    this.entity.data = new Date().toISOString();
-    this.entity.hora = new Date().toTimeString().substr(0, 8);
-
-    this.entity.tiposNuvens = new Tipos();
-    this.entity.pressao = new Pressao();
+    this.synop.data = new Date().toISOString().substr(0, 10);
+    this.synop.hora = new Date().toUTCString().substr(17,8);
 
     this._form = this.formBuilder.group({
-      hora: [this.entity.hora, Validators.required],
-      data: [this.entity.data, Validators.required],
-      periodo: [this.entity.periodo, Validators.required],
-      chuvaStatus: [this.entity.chuvaStatus],
-      qtdChuva: [this.entity.qtdChuva],
-      tempPassado: [this.entity.tempPassado],
-      tempPresente: [this.entity.tempPresente],
-      alturaNuvens: [this.entity.alturaNuvens],
-      visibilidade: [this.entity.visibilidade],
-      qtdNuvens: [this.entity.qtdNuvens],
-      direcaoNuvens: [this.entity.direcaoNuvens],
-      direcaoVento: [this.entity.direcaoVento],
-      tempAmbiente: [this.entity.tempAmbiente],
-      pontoOrvalho: [this.entity.pontoOrvalho],
-      pressaoAtmosferica: [this.entity.pressaoAtmosferica],
-      neboluzidade: [this.entity.neboluzidade],
-      nh: [this.entity.tiposNuvens.nh],
-      cl: [this.entity.tiposNuvens.cl],
-      cn: [this.entity.tiposNuvens.cn],
-      ch: [this.entity.tiposNuvens.ch],
-      tempMax: [this.entity.tempMax],
-      tempMin: [this.entity.tempMin],
-      humidade: [this.entity.humidade],
-      insolacao: [this.entity.insolacao],
-      n1: [this.entity.pressao.n1],
-      n2: [this.entity.pressao.n2],
-      n3: [this.entity.pressao.n3],
-      n4: [this.entity.pressao.n4],
+      data: [this.synop.data],
+      hora: [this.synop.hora , Validators.required],
+
+      // campo de identificação
+      IdRegiao: [this.synop.IdRegiao , Validators.required],
+      IdEstacao: [this.synop.IdEstacao , Validators.required],
+
+      // campo Status do ambiente
+      irlx: [this.synop.irlx , Validators.required],
+      h: [this.synop.h , Validators.required],
+      visibilidade: [this.synop.visibilidade , Validators.required], //%
+
+      // Ceú e Vento (Nddff)
+      N: [this.synop.N],
+      dI: [this.synop.dI],
+      dII: [this.synop.dII],
+      fI: [this.synop.fI],
+      fII: [this.synop.fII],
+
+
+      // 1. Temperatura do ar (SnTTT)
+      // 1
+      SnI: [this.synop.SnI],
+      TI: [this.synop.TI],
+      TII: [this.synop.TII],
+      TIII: [this.synop.TIII],
+
+      // 2. Ponto de Orvalho (SnTdTdTd)
+      // 2
+      SnII: [this.synop.SnII],
+      TdI: [this.synop.TdI],
+      TdII: [this.synop.TdII],
+      TdIII: [this.synop.TdIII],
+
+      // Pressão atmosférica a nível da Estação (PoPoPo)
+      PoI: [this.synop.PoI],
+      PoII: [this.synop.PoII],
+      PoIII: [this.synop.PoIII],
+      PoIV: [this.synop.PoIV],
+
+
+      // 4. Pressão atmosférica a nível da Mar (PPPP)
+      // 4
+      PI: [this.synop.PI],
+      PII: [this.synop.PII],
+      PIII: [this.synop.PIII],
+      PIV: [this.synop.PIV],
+
+      // 7. Fenômenos Observados: Tempo Passado/Presente
+      tempPassado: [this.synop.tempPassado], // °
+      tempPresente: [this.synop.tempPresente], // °
+
+      // 8. Tipos de Nuvens (NhClChCn)
+      nh: [this.synop.nh],
+      cl: [this.synop.cl],
+      ch: [this.synop.ch],
+      cn: [this.synop.cn],
     });
   }
 
   ionViewDidLoad() {
+    if(this.navParams.data.key) {
+      this.synop = this.navParams.data as Synop;
+      this.data.key = this.synop.data + '/';
+    }
   }
 
-  onSubmit() {
-    return new Promise((resolve, reject) => {
-      if (this.entity.key) {
-        this.db.list(this.PATH)
-          .update(this.entity.key, this.entity)
-          .then(() => resolve())
-          .catch((e) => reject(e));
+  public onSubmit() {
+    this.synop.key = this.synop.hora;
+    this.synop.generateSynopString();
+
+    this.PATH += this.data.key + this.synop.key;
+    new Promise((resolve, reject) => {
+      if (this.data.key) {
+        this.db.object(this.PATH)
+          .update(this.synop)
+          .then(() => { resolve(); })
+          .catch((e) => { reject(e); });
       } else {
-        this.db.list(this.PATH)
-          .push(this.entity)
-          .then(() => resolve());
+        this.db.object(this.PATH)
+          .set(this.synop)
+          .then(() => { resolve(); });
       }
-
-      let toast = this.toastCtrl.create({
-        message: 'Feito! :)',
-        duration: 3000
-      });
-
-      toast.present();
-      this.navCtrl.push(ListPage);
     })
+
+    this.navCtrl.push(ListPage);
+  }
+
+  clear() {
+    console.log(this._form.value);
   }
 
   onDelete() {
-      this.db.list(this.PATH).remove(this.entity.key);
+    const PATH =  '/synops/' + this.synop.data;
+    this.db.list(PATH).remove(this.synop.key);
 
-      let toast = this.toastCtrl.create({
-        message: 'Removido!',
-        duration: 3000
-      });
-      toast.present();
-      this.navCtrl.setRoot(ListPage);
+    let toast = this.toastCtrl.create({
+      message: 'Removido!',
+      duration: 3000
+    });
+    toast.present();
+    this.navCtrl.setRoot(ListPage);
   }
 
 }

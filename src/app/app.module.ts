@@ -1,3 +1,4 @@
+import { FIREBASE_CONFIG } from './firebase.config';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -7,38 +8,43 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { ViewPage } from '../pages/view/view';
-
-import { MaskInput } from 'mask-ioni-3/mask-input';
+import { RegisterPage } from '../pages/register/register';
+import { ListDetailsPage } from '../pages/list-details/list-details';
+import { AboutPage } from './../pages/about/about';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { MaskInput } from 'mask-ioni-3/mask-input';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { ChartsModule } from 'ng2-charts';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 @NgModule({
   declarations: [
     MyApp,
+    MaskInput,
+
     LoginPage,
     HomePage,
     ListPage,
-    ViewPage
+    ViewPage,
+    RegisterPage,
+    ListDetailsPage,
+    AboutPage
   ],
+
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
 
-    AngularFireModule.initializeApp({
-      apiKey: "AIzaSyCIUNnhEMlCc5TQkBe9SeL1LQBdOhHMytI",
-      authDomain: "easy-1a3c5.firebaseapp.com",
-      databaseURL: "https://easy-1a3c5.firebaseio.com",
-      projectId: "easy-1a3c5",
-      storageBucket: "easy-1a3c5.appspot.com",
-      messagingSenderId: "453232906151"
-    }),
-    AngularFireDatabaseModule
-
+    AngularFireModule.initializeApp(FIREBASE_CONFIG),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    ChartsModule
   ],
+
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
@@ -46,8 +52,12 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
     LoginPage,
     HomePage,
     ListPage,
-    ViewPage
+    ViewPage,
+    RegisterPage,
+    ListDetailsPage,
+    AboutPage
   ],
+
   providers: [
     StatusBar,
     SplashScreen,

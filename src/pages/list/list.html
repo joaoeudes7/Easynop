@@ -9,10 +9,14 @@
 
 
 <ion-content padding>
-  <ion-card *ngFor="let item of entities">
+    <ion-fab right bottom>
+        <button ion-fab color="primary" (click)="launchAdd()"><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+
+  <div *ngIf="entities">
+   <ion-card *ngFor="let item of entities">
     <ion-card-header>
-      <ion-icon name="thunderstorm"></ion-icon>
-      {{ item.data | date}} | {{ item.hora }}
+        <ion-icon name="thunderstorm"></ion-icon> <a> {{ item.key | date:'dd/MM/yyyy' }}</a>
     </ion-card-header>
     <ion-row no-padding>
 
@@ -20,18 +24,20 @@
       <button ion-item (click)="launchView(item)"><ion-icon name="eye"></ion-icon><a>Detalhes</a></button>
     </ion-col>
     <ion-col>
-      <button ion-item (click)="launchEdit(item)"><ion-icon name="create"></ion-icon><a>Editar</a></button>
-    </ion-col>
-    <!-- <ion-col>
-      <button ion-item><ion-icon name="trash"></ion-icon></button>
-    </ion-col> -->
-    <ion-col>
-      <button ion-item (click)="launchView(item)"><ion-icon name="download"></ion-icon><a>Baixar</a></button>
+      <button ion-item><ion-icon name="trash"></ion-icon><a>Excluir</a></button>
     </ion-col>
     <ion-col>
-      <button ion-item><ion-icon name="share"></ion-icon><a>Compart.</a></button>
+      <button ion-item><ion-icon name="download"></ion-icon><a>Baixar</a></button>
     </ion-col>
 
   </ion-row>
   </ion-card>
+  </div>
+  <div *ngIf="!entities">
+    <ion-card *ngFor="let item of entities">
+      <ion-card-header>
+          <a> Nenhum Synop Cadastrado :(</a>
+      </ion-card-header>
+   </ion-card>
+  </div>
 </ion-content>

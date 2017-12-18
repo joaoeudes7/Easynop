@@ -1,32 +1,31 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Easynop - Login</ion-title>
+    <ion-title>Easynop | Login</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
   <img src="./../../assets/icon/23.png" />
-<ion-card>
+
+  <form [formGroup]="_form" submit="login(user)">
+  <ion-card>
     <ion-card-header><ion-icon name="person"></ion-icon> Login</ion-card-header>
     <ion-row no-padding>
 
     <ion-item mypadding class="border-active">
-      <ion-input placeholder="Email" required="true" clearInput=true></ion-input>
+      <ion-input formControlName="email" placeholder="Email" required="true" [(ngModel)]="user.email" clearInput=true></ion-input>
     </ion-item>
     <ion-item mypadding class="border-active">
-      <ion-input type="password" placeholder="Senha" required="true" clearInput=true></ion-input>
+      <ion-input formControlName="password" type="password" placeholder="Senha" required="true" [(ngModel)]="user.password" clearInput=true></ion-input>
     </ion-item>
 
   </ion-row>
   </ion-card>
 
   <div class="margin center">
-    <button ion-button color="danger">Recuperar Senha</button>
-    <button ion-button>Entrar</button>
+    <button ion-button color="danger" (click)="register()">Registrar</button>
+    <button ion-button type="submit" (click)="login(user)" [disabled]="_form.invalid">Entrar</button>
   </div>
-
+</form>
 </ion-content>

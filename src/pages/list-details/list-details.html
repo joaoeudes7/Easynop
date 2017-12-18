@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Synops Cadastrados</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    <ion-fab right bottom>
+        <button ion-fab color="primary" (click)="launchAdd()"><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+  <ion-card>
+    <ion-card-header>
+      Visão Geral
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #lineCanvas ></canvas>
+    </ion-card-content>
+  </ion-card>
+
+   <ion-card *ngFor="let item of data">
+    <ion-card-header>
+      <ion-icon name="thunderstorm"></ion-icon> <a> {{ item.hora }}</a>
+    </ion-card-header>
+    <ion-row no-padding>
+
+    <ion-col>
+      <button ion-item (click)="launchView(item)"><ion-icon name="eye"></ion-icon><a>Detalhes</a></button>
+    </ion-col>
+    <ion-col>
+      <button ion-item (click)="launchEdit(item)"><ion-icon name="create"></ion-icon></button>
+    </ion-col>
+    <ion-col>
+      <button ion-item (click)="onDelete(item)"><ion-icon name="trash"></ion-icon></button>
+    </ion-col>
+    <ion-col>
+      <button ion-item (click)="launchView(item)"><ion-icon name="download"></ion-icon></button>
+    </ion-col>
+    <ion-col>
+      <button ion-item><ion-icon name="share"></ion-icon></button>
+    </ion-col>
+
+  </ion-row>
+  </ion-card>
+</ion-content>

@@ -12,26 +12,60 @@
   <ion-card>
     <ion-card-header><ion-icon name="thunderstorm"></ion-icon> Detalhes {{ entities?.data | date}}</ion-card-header>
     <ion-item-group>
-      <ion-item-divider color="light">A</ion-item-divider>
-      <ion-item><a>Temperatura Máxima: {{entities?.tempMax}} </a></ion-item>
-      <ion-item><a>Temperatura Mínima: {{entities?.tempMin}} </a></ion-item>
-      <ion-item><a>Altura das Nuvens: {{entities?.alturaNuvens}}</a></ion-item>
-      <ion-item><a>Status das Chuvas: {{entities?.chuvaStatus}}</a></ion-item>
-      <ion-item><a>Direcao das Nuvens: {{entities?.direcaoNuvens}}</a></ion-item>
-      <ion-item><a>Direção do tempo: {{entities?.direcaoVento}}</a></ion-item>
-      <ion-item><a>Neboluzidade: {{entities?.neboluzidade}}</a></ion-item>
-      <ion-item><a>Numéro da estação: {{entities?.numEstacao}}</a></ion-item>
-      <ion-item><a>Periodo: {{entities?.periodo}}</a></ion-item>
-      <ion-item><a>Ponto de Orvalho: {{entities?.pontoOrvalho}}</a></ion-item>
-      <ion-item><a>Tipos de Nuvens: [ {{entities?.pressao.n1}} | {{entities?.pressao.n2}} | {{entities?.pressao.n3}} | {{entities?.pressao.n4}} ]</a></ion-item>
-      <ion-item><a>Pressao Atmosferica: {{entities?.pressaoAtmosferica}}</a></ion-item>
-      <ion-item><a>Quantidade de chuva: {{entities?.qtdChuva}}</a></ion-item>
-      <ion-item><a>Quantidade de nuvens: {{entities?.qtdNuvens}}</a></ion-item>
-      <ion-item><a>Temperatura ambiente: {{entities?.tempAmbiente}}</a></ion-item>
-      <ion-item><a>Tempo Passado: {{entities?.tempPassado}}</a></ion-item>
-      <ion-item><a>Tempo presente chuva: {{entities?.tempPresente}}</a></ion-item>
-      <ion-item><a>Tipos de Nuvens: [ {{entities?.tiposNuvens.ch}} | {{entities?.tiposNuvens.cl}} | {{entities?.tiposNuvens.cn}} | {{entities?.tiposNuvens.nh}} ]</a></ion-item>
-      <ion-item><a>Visibilidade: {{entities?.visibilidade}}</a></ion-item>
+
+      <ion-item-divider color="light">Campo Informativo</ion-item-divider>
+      <ion-item-divider color="light">Y Y G G lw</ion-item-divider>
+      <ion-item><a> {{entities?.campoInformativo}} </a></ion-item>
+
+      <ion-item-divider color="light">Campo Indentificação</ion-item-divider>
+      <ion-item-divider color="light"> i  i  i  i</ion-item-divider>
+      <ion-item><a> {{entities?.campoIdentidade}} </a></ion-item>
+
+      <ion-item-divider color="light">Campo Ambiente</ion-item-divider>
+      <ion-item-divider color="light">Ir Ix h V V</ion-item-divider>
+      <ion-item><a> {{entities?.campoAmbiente}}</a></ion-item>
+
+      <ion-item-divider color="light">Nuvens e Vento</ion-item-divider>
+      <ion-item-divider color="light">N d d f f</ion-item-divider>
+      <ion-item><a> {{entities?.campoNuvenseVento}}</a></ion-item>
+
+      <ion-item-divider color="light">Campo Temperatura</ion-item-divider>
+      <ion-item-divider color="light">1 Sn T T T</ion-item-divider>
+      <ion-item><a>1 {{entities?.camposTemperatura}}</a></ion-item>
+
+      <ion-item-divider color="light">Orvalho</ion-item-divider>
+      <ion-item-divider color="light">2 Sn Td Td Td</ion-item-divider>
+      <ion-item><a>2 {{entities?.campoOrvalho}}</a></ion-item>
+
+      <ion-item-divider color="light">Pressão Estação</ion-item-divider>
+      <ion-item-divider color="light">  Po Po Po Po</ion-item-divider>
+      <ion-item><a>3 {{entities?.campoPressaoEstacao}}</a></ion-item>
+
+      <ion-item-divider color="light">Pressão do Mar</ion-item-divider>
+      <ion-item-divider color="light">4 P P P P</ion-item-divider>
+      <ion-item><a>4 {{entities?.campoPressaoMar}}</a></ion-item>
+
+      <div *ngIf="entities.tempPassadoPresente">
+      <ion-item-divider color="light">Tempo Passado/Presente</ion-item-divider>
+      <ion-item-divider color="light">w w W¹ W²</ion-item-divider>
+      <ion-item><a> {{entities?.tempPassadoPresente}}</a></ion-item>
+      </div>
+
+      <ion-item-divider color="light">Tipos de Nuvens</ion-item-divider>
+      <ion-item-divider color="light">8 Nh Cl Cm Ch</ion-item-divider>
+      <ion-item><a>8 {{entities?.tiposdeNuvens}}</a></ion-item>
+
+      <!-- <ion-item-divider color="light">Campo Indentificação</ion-item-divider>
+      <ion-item-divider color="light">Y Y G G lw</ion-item-divider>
+      <ion-item><a> {{entities?.pontoOrvalho}}</a></ion-item>
+
+      <ion-item-divider color="light">Campo Indentificação</ion-item-divider>
+      <ion-item-divider color="light">Y Y G G lw</ion-item-divider>
+      <ion-item><a> </a></ion-item>
+
+      <ion-item-divider color="light">Y Y G G lw</ion-item-divider>
+      <ion-item><a> {{entities?.pressaoAtmosferica}}</a></ion-item>
+      <ion-item><a> {{entities?.qtdChuva}}</a></ion-item> -->
     </ion-item-group>
   </ion-card>
 </ion-content>

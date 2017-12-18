@@ -3,155 +3,364 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Easynop</ion-title>
+    <ion-title>Novo Synop</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   <form [formGroup]="_form">
+
+    <ion-item-divider color="light">Informações</ion-item-divider>
     <ion-card>
       <ion-item>
         <ion-label>Data</ion-label>
-        <ion-datetime formControlName="data" type="datetime-local" displayFormat="DD/MM/YYYY" [(ngModel)]="entity.data"></ion-datetime>
+        <ion-datetime formControlName="data" type="datetime-local" displayFormat="DD/MM/YYYY" [(ngModel)]="synop.data"></ion-datetime>
       </ion-item>
 
       <ion-item>
         <ion-label>Hora</ion-label>
-        <ion-datetime formControlName="hora" displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="entity.hora"></ion-datetime>
+        <ion-datetime formControlName="hora" displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="synop.hora"></ion-datetime>
       </ion-item>
     </ion-card>
 
-    <ion-item mypadding>
-      <ion-label>Periodo</ion-label>
-      <ion-select formControlName="periodo" [(ngModel)]="entity.periodo">
-        <ion-option value="M">Manhã</ion-option>
-        <ion-option value="T">Tarde</ion-option>
-        <ion-option value="N">Noite</ion-option>
-      </ion-select>
-    </ion-item>
+    <ion-item-divider color="light">Identificação da Região e Estacão</ion-item-divider>
+    <div mypadding>
+      <ion-grid>
+        <ion-row>
 
-    <ion-item-divider color="light">3 Campo</ion-item-divider>
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="IdRegiao" [(ngModel)]="synop.IdRegiao" type="number" placeholder="ID Região"></ion-input>
+            </ion-item>
+          </ion-col>
 
-    <ion-item mypadding>
-      <ion-label>Status de chuva</ion-label>
-      <ion-select  formControlName="chuvaStatus" [(ngModel)]="entity.chuvaStatus">
-        <ion-option value="21">Chuvas registradas</ion-option>
-        <ion-option value="32">Sem chuvas</ion-option>
-      </ion-select>
-    </ion-item>
-    <div *ngIf="entity.chuvaStatus == 21" mypadding>
-      <ion-item>
-        <ion-input formControlName="qtdChuva" [(ngModel)]="entity.qtdChuva" type="number" placeholder="Quantidade de Chuva"></ion-input>
-      </ion-item>
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="IdEstacao" [(ngModel)]="synop.IdEstacao" type="number" placeholder="ID Estação"></ion-input>
+            </ion-item>
+          </ion-col>
 
-      <ion-item>
-        <ion-input formControlName="tempPassado" [(ngModel)]="entity.tempPassado" type="number" placeholder="Tempo passado"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input formControlName="tempPresente" [(ngModel)]="entity.tempPresente" type="number" placeholder="Tempo presente"></ion-input>
-      </ion-item>
+        </ion-row>
+      </ion-grid>
     </div>
 
-    <ion-item mypadding>
-      <ion-input formControlName="alturaNuvens" [(ngModel)]="entity.alturaNuvens" type="text" placeholder="Altura de nuvens predominantes"></ion-input>
-    </ion-item>
+    <ion-item-divider color="light">Status do Ambiente</ion-item-divider>
+    <div mypadding>
 
-    <ion-item mypadding>
-      <ion-label>Visibilidade</ion-label>
-      <ion-select  formControlName="visibilidade" [(ngModel)]="entity.visibilidade">
-        <ion-option value="98">Manhã/Tarde = 98%</ion-option>
-        <ion-option value="96">Noite = 96%</ion-option>
-      </ion-select>
-    </ion-item>
+      <ion-item>
+        <ion-label>Status de Chuva/IrLx</ion-label>
+        <ion-select formControlName="irlx" [(ngModel)]="synop.irlx">
+          <ion-option value="21">Chuvas registradas (21)</ion-option>
+          <ion-option value="32">Sem chuvas (32)</ion-option>
+        </ion-select>
+      </ion-item>
 
-    <ion-item-divider color="light">4 Campo</ion-item-divider>
+      <ion-item>
+        <ion-input formControlName="h" [(ngModel)]="synop.h" type="text" placeholder="Altura de nuvens predominantes"></ion-input>
+      </ion-item>
 
-    <ion-item mypadding>
-      <ion-input formControlName="qtdNuvens" [(ngModel)]="entity.qtdNuvens" type="number" placeholder="Quantidade de nuvens"></ion-input>
-    </ion-item>
-    <ion-item mypadding>
-      <ion-input formControlName="direcaoNuvens" [(ngModel)]="entity.direcaoNuvens" type="number" placeholder="Direção do vento"></ion-input>
-    </ion-item>
-    <ion-item mypadding>
-      <ion-input formControlName="direcaoVento" [(ngModel)]="entity.direcaoVento" type="number" placeholder="Velocidade do vento"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label>Visibilidade</ion-label>
+        <ion-select formControlName="visibilidade" [(ngModel)]="synop.visibilidade">
+          <ion-option value="98">Manhã/Tarde = 98%</ion-option>
+          <ion-option value="96">Noite = 96%</ion-option>
+        </ion-select>
+      </ion-item>
 
-    <ion-item-divider color="light">5 Campo</ion-item-divider>
+    </div>
 
+    <ion-item-divider color="light">Ceú e Vento</ion-item-divider>
+    <div mypadding>
+      <!-- Nddff -->
+      <ion-grid>
+        <ion-row>
+
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="N" [(ngModel)]="synop.N" (input)="d1.setFocus()" type="number" placeholder="N"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="dI" #d1 [(ngModel)]="synop.dI" (input)="d2.setFocus()" type="number" placeholder="d"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="dII" #d2 [(ngModel)]="synop.dII" (input)="f1.setFocus()" type="number" placeholder="d"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="fI" #f1 [(ngModel)]="synop.fI" (input)="f2.setFocus()" type="number" placeholder="f"></ion-input>
+            </ion-item>
+          </ion-col>
+
+
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="fII" #f2 [(ngModel)]="synop.fII" (input)="SnI.setFocus()" type="number" placeholder="f"></ion-input>
+            </ion-item>
+          </ion-col>
+
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <ion-item-divider color="light">1. Temperatura do ar</ion-item-divider>
+    <div mypadding>
+      <!-- SnTTT -->
+      <ion-grid>
+        <ion-row>
+          <p>1</p>
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="SnI" #SnI [(ngModel)]="synop.SnI" (input)="t1.setFocus()" type="number" placeholder="Sn"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="TI" #t1 [(ngModel)]="synop.TI" (input)="t2.setFocus()" type="number" placeholder="T"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="TII" #t2 [(ngModel)]="synop.TII" (input)="t3.setFocus()" type="number" placeholder="T"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="TIII" #t3 [(ngModel)]="synop.TIII" (input)="td1.setFocus()" type="number" placeholder="T"></ion-input>
+            </ion-item>
+          </ion-col>
+
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <ion-item-divider color="light">2. Ponto de Orvalho</ion-item-divider>
+    <div mypadding>
+      <!-- SnTdtTdTd -->
+      <ion-grid>
+        <ion-row>
+            <p>2</p>
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="SnII" #sn2 [(ngModel)]="synop.SnII" (input)="td1.setFocus()" type="number" placeholder="Sn"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="TdI" #td1 [(ngModel)]="synop.TdI" (input)="td2.setFocus()" type="number" placeholder="Td"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="TdII" #td2 [(ngModel)]="synop.TdII" (input)="td3.setFocus()" type="number" placeholder="Td"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="TdIII" #td3 [(ngModel)]="synop.TdIII" (input)="po1.setFocus()" type="number" placeholder="Td"></ion-input>
+            </ion-item>
+          </ion-col>
+
+        </ion-row>
+      </ion-grid>
+    </div>
+
+
+    <ion-item-divider color="light">Pressão atmosférica a nível da Estação</ion-item-divider>
+    <div mypadding>
+      <!-- PoPoPoPo -->
+      <ion-grid>
+        <ion-row>
+            <p>3</p>
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="PoI" #po1 [(ngModel)]="synop.PoI" (input)="po2.setFocus()" type="number" placeholder="po"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="PoII" #po2 [(ngModel)]="synop.PoII" (input)="po3.setFocus()" type="number" placeholder="po"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="PoIII" #po3 [(ngModel)]="synop.PoIII" (input)="po4.setFocus()" type="number" placeholder="po"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="PoIV" #po4 [(ngModel)]="synop.PoIV" (input)="pi1.setFocus()" type="number" placeholder="po"></ion-input>
+            </ion-item>
+          </ion-col>
+
+        </ion-row>
+      </ion-grid>
+
+    </div>
+
+    <ion-item-divider color="light">4. Pressão atmosférica a nível da Mar</ion-item-divider>
+    <div mypadding>
+      <!-- PPPP -->
+      <ion-grid>
+        <ion-row>
+          <span>4</span>
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="PI" #pi1 [(ngModel)]="synop.PI" (input)="pi2.setFocus()" type="number" placeholder="P"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="PII" #pi2 [(ngModel)]="synop.PII" (input)="pi3.setFocus()" type="number" placeholder="P"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="PIII" #pi3 [(ngModel)]="synop.PIII" (input)="pi4.setFocus()" type="number" placeholder="P"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item>
+              <ion-input formControlName="PIV" #pi4 [(ngModel)]="synop.PIV" type="number" placeholder="P"></ion-input>
+            </ion-item>
+          </ion-col>
+
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div *ngIf="synop.irlx == 21" mypadding>
+      <ion-item-divider color="light">7. Fenômenos Observados: Tempo Passado/Presente</ion-item-divider>
+      <div mypadding>
+        <ion-grid>
+          <ion-row>
+
+            <ion-col>
+              <ion-item>
+                <ion-input formControlName="tempPassado" [(ngModel)]="synop.tempPassado" type="number" placeholder="ww" required="true"></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col>
+              <ion-item>
+                <ion-input formControlName="tempPresente" [(ngModel)]="synop.tempPresente" type="number" placeholder="W1W1" required="true"></ion-input>
+              </ion-item>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+
+    <ion-item-divider color="light">8. Tipos de Nuvens</ion-item-divider>
+    <div mypadding>
+      <ion-item>
+        <ion-label>NH: {{synop.nh}}</ion-label>
+        <ion-range [(ngModel)]="synop.nh" formControlName="nh" min="0" max="9" step="1" snaps="false" color="sunny">
+          <ion-icon range-left small color="primary" name="cloud-outline"></ion-icon>
+          <ion-icon range-right color="primary" name="cloud"></ion-icon>
+        </ion-range>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>CL: {{synop.cl}}</ion-label>
+        <ion-range formControlName="cl" [(ngModel)]="synop.cl" min="0" max="9" step="1" snaps="false" color="sunny">
+          <ion-icon range-left small color="primary" name="cloud-outline"></ion-icon>
+          <ion-icon range-right color="primary" name="cloud"></ion-icon>
+        </ion-range>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>CM: {{synop.cn}}</ion-label>
+        <ion-range formControlName="cn" [(ngModel)]="synop.cn" min="0" max="9" step="1" snaps="false" color="sunny">
+          <ion-icon range-left small color="primary" name="cloud-outline"></ion-icon>
+          <ion-icon range-right color="primary" name="cloud"></ion-icon>
+        </ion-range>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>CH: {{synop.ch}}</ion-label>
+        <ion-range formControlName="ch" [(ngModel)]="synop.ch" min="0" max="9" step="1" snaps="false" color="sunny">
+          <ion-icon range-left small color="primary" name="cloud-outline"></ion-icon>
+          <ion-icon range-right color="primary" name="cloud"></ion-icon>
+        </ion-range>
+      </ion-item>
+    </div>
+    <!-- <ion-item-divider color="light">5 Campo</ion-item-divider>
     <ion-item mypadding>
-      <ion-input formControlName="tempAmbiente" [(ngModel)]="entity.tempAmbiente" type="number" placeholder="Temperatura ambiente"></ion-input>
+      <label></label>
+      <ion-input formControlName="tempAmbiente" [(ngModel)]="synop.tempAmbiente" type="number" placeholder="Temperatura ambiente"></ion-input>
     </ion-item>
 
     <ion-item-divider color="light">6 Campo</ion-item-divider>
 
     <ion-item mypadding>
-      <ion-input formControlName="pontoOrvalho" [(ngModel)]="entity.pontoOrvalho" type="number" placeholder="Ponto de Orvalho"></ion-input>
+      <ion-input formControlName="pontoOrvalho" [(ngModel)]="synop.pontoOrvalho" type="number" placeholder="Ponto de Orvalho"></ion-input>
     </ion-item>
 
     <ion-item-divider color="light">7 Campo</ion-item-divider>
 
+
     <ion-item mypadding>
-      <ion-input formControlName="pressaoAtmosferica" [(ngModel)]="entity.pressaoAtmosferica" type="number" placeholder="Pressão atmosférica"></ion-input>
+      <ion-input formControlName="pressaoAtmosferica" [(ngModel)]="synop.pressaoAtmosferica" type="number" placeholder="Pressão atmosférica"></ion-input>
     </ion-item>
 
     <ion-item-divider color="light">8 Campo</ion-item-divider>
 
-    <ion-item mypadding>
-      <ion-input formControlName="neboluzidade" [(ngModel)]="entity.neboluzidade" type="number" placeholder="Neboluzidade"></ion-input>
+
+
+    <ion-item>
+      <ion-input formControlName="qtdChuva" [(ngModel)]="synop.qtdChuva" type="number" placeholder="Quantidade de Chuva"></ion-input>
     </ion-item>
 
-    <ion-item-divider color="light">Tipos de Nuvens</ion-item-divider>
-
-    <ion-item mypadding>
-      <ion-label>NH: {{entity.tiposNuvens.nh}}</ion-label>
-      <ion-range  formControlName="nh" min="0" max="9" step="1" snaps="false" [(ngModel)]="entity.tiposNuvens.nh" color="sunny">
-        <ion-icon range-left small color="primary" name="cloud-outline"></ion-icon>
-        <ion-icon range-right color="primary" name="cloud"></ion-icon>
-      </ion-range>
-    </ion-item>
-
-    <ion-item mypadding>
-      <ion-label>CL: {{entity.tiposNuvens.cl}}</ion-label>
-      <ion-range  formControlName="cl" min="0" max="9" step="1" snaps="false" [(ngModel)]="entity.tiposNuvens.cl" color="sunny">
-        <ion-icon range-left small color="primary" name="cloud-outline"></ion-icon>
-        <ion-icon range-right color="primary" name="cloud"></ion-icon>
-      </ion-range>
-    </ion-item>
-
-    <ion-item mypadding>
-      <ion-label>CM: {{entity.tiposNuvens.cn}}</ion-label>
-      <ion-range formControlName="cn" min="0" max="9" step="1" snaps="false" [(ngModel)]="entity.tiposNuvens.cn" color="sunny">
-        <ion-icon range-left small color="primary" name="cloud-outline"></ion-icon>
-        <ion-icon range-right color="primary" name="cloud"></ion-icon>
-      </ion-range>
-    </ion-item>
-
-
-    <ion-item mypadding>
-      <ion-label>CH: {{entity.tiposNuvens.ch}}</ion-label>
-      <ion-range formControlName="ch" min="0" max="9" step="1" snaps="false" [(ngModel)]="entity.tiposNuvens.ch" color="sunny">
-        <ion-icon range-left small color="primary" name="cloud-outline"></ion-icon>
-        <ion-icon range-right color="primary" name="cloud"></ion-icon>
-      </ion-range>
-    </ion-item>
-
-
-    <div *ngIf="entity.periodo == 'M' || entity.periodo == 'N'">
+    <div *ngIf="synop.periodo == 'M' || synop.periodo == 'N'">
       <ion-item-divider color="light">10 Campo</ion-item-divider>
 
-      <ion-item mypadding *ngIf="entity.periodo == 'M'">
-        <ion-input formControlName="tempMin" [(ngModel)]="entity.tempMin" type="number" placeholder="Temperatura Minima"></ion-input>
+
+      <ion-item *ngIf="synop.periodo == 'M'">
+        <ion-input formControlName="tempMin" [(ngModel)]="synop.tempMin" type="number" placeholder="Temp. Min"></ion-input>
       </ion-item>
-      <div *ngIf="entity.periodo == 'N'">
-        <ion-item mypadding>
-          <ion-input formControlName="tempMax" [(ngModel)]="entity.tempMax" type="number" placeholder="Temperatura Máxima"></ion-input>
-        </ion-item>
-        <ion-item mypadding>
-          <ion-input formControlName="humidade" [(ngModel)]="entity.humidade" type="number" placeholder="Humidade"></ion-input>
-        </ion-item>
-        <ion-item mypadding>
-          <ion-input formControlName="insolacao" [(ngModel)]="entity.insolacao" type="number" placeholder="Insolação"></ion-input>
-        </ion-item>
+
+      <div *ngIf="synop.periodo == 'N'">
+        <ion-grid mypadding>
+          <ion-row>
+
+            <ion-col>
+              <ion-item>
+                <ion-input formControlName="tempMax" [(ngModel)]="synop.tempMax" type="number" placeholder="Temp. Máx"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-input formControlName="humidade" [(ngModel)]="synop.humidade" type="number" placeholder="Humidade"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-input formControlName="insolacao" [(ngModel)]="synop.insolacao" type="number" placeholder="Insolação"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
     </div>
 
@@ -161,38 +370,38 @@
 
         <ion-col>
           <ion-item>
-            <ion-input formControlName="n1" [(ngModel)]="entity.pressao.n1" (input)="p2.setFocus()" [max]="1" placeholder="ex: 5"></ion-input>
+            <ion-input formControlName="n1" [(ngModel)]="synop.pressao.n1" (input)="p2.setFocus()" [max]="1" placeholder="ex: 5"></ion-input>
           </ion-item>
         </ion-col>
 
         <ion-col>
           <ion-item>
-            <ion-input formControlName="n2" [(ngModel)]="entity.pressao.n2" #p2 (input)="p3.setFocus()" [max]="1" placeholder="ex: 5"></ion-input>
+            <ion-input formControlName="n2" [(ngModel)]="synop.pressao.n2" #p2 (input)="p3.setFocus()" [max]="1" placeholder="ex: 5"></ion-input>
           </ion-item>
         </ion-col>
 
         <ion-col>
           <ion-item>
-            <ion-input formControlName="n3" [(ngModel)]="entity.pressao.n3" #p3 (input)="p4.setFocus()" [max]="1" placeholder="ex: 5"></ion-input>
+            <ion-input formControlName="n3" [(ngModel)]="synop.pressao.n3" #p3 (input)="p4.setFocus()" [max]="1" placeholder="ex: 5"></ion-input>
           </ion-item>
         </ion-col>
 
         <ion-col>
           <ion-item>
-            <ion-input formControlName="n4" [(ngModel)]="entity.pressao.n4" #p4 [max]="1" placeholder="ex: 5"></ion-input>
+            <ion-input formControlName="n4" [(ngModel)]="synop.pressao.n4" #p4 [mask]="0" placeholder="ex: 5"></ion-input>
           </ion-item>
         </ion-col>
 
       </ion-row>
-    </ion-grid>
+    </ion-grid> -->
 
     <!-- Botões Submit e Cancelar -->
-<ion-item-divider color="light">Salvar/Limpar Dados</ion-item-divider>
-<div class="center">
-    <button ion-button [disabled]="entity.key == null" color="danger" (click)="onDelete()">Remover</button>
-    <button ion-button color="warn">Limpar</button>
-    <button ion-button (click)="onSubmit()" [disabled]="_form.invalid">Salvar</button>
-</div>
+    <ion-item-divider color="light">Salvar/Limpar Dados</ion-item-divider>
+    <div class="center">
+      <button ion-button [hidden]="synop.key == null" color="danger" (click)="onDelete()">Remover</button>
+      <button ion-button color="warn" (click)="clear()">Limpar</button>
+      <button ion-button (click)="onSubmit()">Salvar</button>
+    </div>
 
   </form>
 

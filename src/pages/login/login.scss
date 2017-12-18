@@ -18,6 +18,30 @@ img {
   margin-top: 20px;
 }
 
+page-login {
+  @media only screen and (min-width: 768px) {
+    .scroll-content {
+      padding: 16px 25% !important;
+    }
+  }
+}
+
+img {
+  height: auto;
+  width: 50%;
+  margin: auto;
+  display: block;
+  max-width: 256px;
+}
+
+.margin {
+  margin-top: 20px;
+}
+
+
+.border-active {
+  border-bottom: 1px solid #dedede;
+}
 
 .border-active {
   border-bottom: 1px solid #dedede;
